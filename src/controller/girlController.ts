@@ -38,7 +38,7 @@ export const createGirl: RequestHandler = async (req: ExtendFileRequest, res): P
         .toFile(`./public/media/${files.images[x].originalFilename?.split(".")[0]}.webp`);
       images.push({
         pic_name: req.fields?.name?.[0] as string,
-        pic_url: `${process.env.URL_IMG_PROD}/${files.images[x].originalFilename?.split(".")[0]}.webp`,
+        pic_url: `${process.env.URL_IMG_PROD}.top/media/${files.images[x].originalFilename?.split(".")[0]}.webp`,
         selected: false,
         createdAt: new Date(),
         updatedAt: new Date(),
