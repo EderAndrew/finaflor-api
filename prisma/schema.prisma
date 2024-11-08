@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  user_name String
+  password  String
+  createdAt DateTime?
+  updatedAt DateTime  @default(now())
+
+  @@map("users")
+}
+
+model Girl {
+  id          Int       @id @default(autoincrement())
+  name_id     String    @unique
+  name        String
+  description Boolean   @default(false)
+  day         DateTime  @default(now())
+  selected    Boolean   @default(false)
+  createdAt   DateTime?
+  updatedAt   DateTime  @default(now())
+  Pic         Pic[]
+
+  @@map("girls")
+}
+
+model Pic {
+  id        Int       @id @default(autoincrement())
+  pic_name  String
+  pic_url   String
+  selected  Boolean   @default(false)
+  createdAt DateTime?
+  updatedAt DateTime  @default(now())
+  girl_id   Int
+  girls     Girl      @relation(fields: [girl_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("pics")
+}
+
+model Event {
+  id          Int       @id @default(autoincrement())
+  name        String
+  url_banner  String
+  description String
+  createdAt   DateTime?
+  updatedAt   DateTime  @default(now())
+
+  @@map("events")
+}
+
+model Promo {
+  id          Int       @id @default(autoincrement())
+  name        String
+  url_banner  String
+  description String
+  createdAt   DateTime?
+  updatedAt   DateTime  @default(now())
+
+  @@map("promos")
+}
