@@ -1,7 +1,6 @@
 module.exports = {
-  port: process.env.PORT,
   apps : [{
-    name   : "app1",
-    script : "./dist/server.js"
+    name   : "finaflor-api",
+    script : "set NODE_ENV=production && node --import=tsx --env-file=.env ./dist/server.js"
   }]
 }
