@@ -2,41 +2,59 @@ import { IUser } from "../interfaces/userinterface";
 import { prisma } from "../utils/prisma";
 
 export const findUser = async (name: string) => {
-  const user = await prisma.user.findFirst({
-    where: {
-      user_name: name,
-    },
-  });
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        user_name: name,
+      },
+    });
 
-  if (!user) return null;
+    if (!user) return null;
 
-  return user;
+    return user;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
 };
 
 export const findUserById = async (id: number) => {
-  const user = await prisma.user.findFirst({
-    where: {
-      id,
-    },
-  });
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+    });
 
-  if (!user) return null;
+    if (!user) return null;
 
-  return user;
+    return user;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
 };
 
 export const postUser = async (info: IUser) => {
-  const user = await prisma.user.create({
-    data: {
-      name: info.name,
-      user_name: info.user_name,
-      password: info.password,
-      createdAt: info.createdAt,
-      updatedAt: info.updatedAt,
-    },
-  });
+  try {
+    const user = await prisma.user.create({
+      data: {
+        name: info.name,
+        user_name: info.user_name,
+        password: info.password,
+        createdAt: info.createdAt,
+        updatedAt: info.updatedAt,
+      },
+    });
 
-  if (!user) return null;
+    if (!user) return null;
 
-  return user;
+    return user;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
 };

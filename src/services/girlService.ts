@@ -15,38 +15,49 @@ export const findGirlByName = async (name: string) => {
 };
 
 export const newGirl = async (payload: IGirl) => {
-  console.log(payload.pics);
-  const girl = await prisma.girl.create({
-    data: {
-      name_id: payload.name_id,
-      name: payload.name,
-      description: payload.description,
-      day: payload.day,
-      selected: payload.selected,
-      createdAt: payload.createdAt,
-      updatedAt: payload.updatedAt,
-      Pic: {
-        create: [...payload.pics],
+  try {
+    const girl = await prisma.girl.create({
+      data: {
+        name_id: payload.name_id,
+        name: payload.name,
+        description: payload.description,
+        day: payload.day,
+        selected: payload.selected,
+        createdAt: payload.createdAt,
+        updatedAt: payload.updatedAt,
+        Pic: {
+          create: [...payload.pics],
+        },
       },
-    },
-  });
+    });
 
-  if (!girl) return null;
+    if (!girl) return null;
 
-  return girl;
+    return girl;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
 };
 
 export const getGirls = async () => {
-  const girls = await prisma.girl.findMany({
-    include: {
-      Pic: true,
-    },
-    orderBy: {
-      name: "asc",
-    },
-  });
+  try {
+    const girls = await prisma.girl.findMany({
+      include: {
+        Pic: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
 
-  if (!girls) return null;
+    if (!girls) return null;
 
-  return girls;
+    return girls;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
 };
