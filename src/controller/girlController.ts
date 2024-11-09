@@ -38,14 +38,17 @@ export const createGirl: RequestHandler = async (req: ExtendFileRequest, res): P
         .toFile(`./public/media/${files.images[x].originalFilename?.split(".")[0]}.webp`);
       images.push({
         pic_name: req.fields?.name?.[0] as string,
-        pic_url: `${process.env.URL_IMG_PROD}.top/media/${files.images[x].originalFilename?.split(".")[0]}.webp`,
+        pic_url:
+          process.env.NODE_ENV === "production"
+            ? `${process.env.URL_IMG_PROD}${files.images[x].originalFilename?.split(".")[0]}.webp`
+            : `${process.env.URL_IMG_DEV}/${files.images[x].originalFilename?.split(".")[0]}.webp`,
         selected: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
       await fs.unlink(files.images[x].filepath);
     }
-
+    console.log(images);
     //vERIFICA SE JÁ EXISTE UMA GAROTA COM O NOME
     const haveGirl = await findGirlByName(safeData.data.name_id as string);
 

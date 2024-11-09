@@ -15,6 +15,7 @@ export const findGirlByName = async (name: string) => {
 };
 
 export const newGirl = async (payload: IGirl) => {
+  console.log(payload.pics);
   const girl = await prisma.girl.create({
     data: {
       name_id: payload.name_id,

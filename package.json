@@ -13,7 +13,7 @@
     "build": "prisma generate && tsc",
     "dev": "node --import=tsx --watch --env-file=.env ./src/server.ts",
     "prod": "set NODE_ENV=production && node --import=tsx --env-file=.env ./dist/server.js",
-    "deploy": "git pull && pnpm install && npx prisma migrate deploy && pm2 restart finaflor-api"
+    "deploy": "git pull && pnpm install && npx prisma migrate deploy && prisma generate && tsc && pm2 restart finaflor-api"
   },
   "keywords": [],
   "author": "Eder Andrew",
