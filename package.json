@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
