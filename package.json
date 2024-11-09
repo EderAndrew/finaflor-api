@@ -3,16 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines": {
-    "node": ">=20.0.0"
-  },
+  "type": "commonjs",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
     "build": "prisma generate && tsc",
     "dev": "node --import=tsx --watch --env-file=.env ./src/server.ts",
-    "prod": "set NODE_ENV=production && node --import=tsx --env-file=.env ./dist/server.js",
+    "prod": "set NODE_ENV=production && node --import=tsx --env-file=.env dist/server.js",
     "deploy": "git pull && pnpm install && npx prisma migrate deploy && prisma generate && tsc && pm2 restart finaflor-api"
   },
   "keywords": [],
