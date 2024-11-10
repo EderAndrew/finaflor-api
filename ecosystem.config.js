@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name   : "finaflor-api",
-    script : "dist/server.js",
+    script : "./dist/server.js",
     env_production: {
       NODE_ENV: "production"
     },

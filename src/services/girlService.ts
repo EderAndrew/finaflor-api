@@ -1,4 +1,3 @@
-import { Girl } from "@prisma/client";
 import { IGirl } from "../interfaces/girlinterface";
 import { prisma } from "../utils/prisma";
 

@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { findUser } from "../services/userService";
-import { compare } from "bcrypt-ts";
+import { compare } from "bcrypt";
 import { loginSchema } from "../schemas/loginSchema";
 import { createJWT } from "../utils/jwt";
 

@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { userSchema } from "../schemas/userSchema";
-import { hashSync } from "bcrypt-ts";
+import { hashSync } from "bcrypt";
 import { findUser, postUser } from "../services/userService";
 
 export const createUser: RequestHandler = async (req, res): Promise<any> => {
