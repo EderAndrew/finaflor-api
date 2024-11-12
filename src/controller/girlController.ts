@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import { RequestHandler } from "express";
 import { girlSchema } from "../schemas/girlSchema";
-import { findGirlByName, getGirls, newGirl } from "../services/girlService";
+import { findGirlById, findGirlByName, getGirls, newGirl } from "../services/girlService";
 import { IGirl } from "../interfaces/girlinterface";
 import { ExtendFileRequest } from "../interfaces/extend-request";
 import formidable from "formidable";
@@ -48,7 +48,7 @@ export const createGirl: RequestHandler = async (req: ExtendFileRequest, res): P
       });
       await fs.unlink(files.images[x].filepath);
     }
-    console.log(images);
+
     //vERIFICA SE JÁ EXISTE UMA GAROTA COM O NOME
     const haveGirl = await findGirlByName(safeData.data.name_id as string);
 
@@ -84,6 +84,46 @@ export const getAllGirls: RequestHandler = async (req, res): Promise<any> => {
     if (!girls) return res.status(400).json({ message: "Não tem nenhuma garota pra mostrar." });
 
     return res.status(200).json(girls);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};
+
+export const getOneGirl: RequestHandler = async (req, res): Promise<any> => {
+  try {
+    const { id } = req.params;
+
+    const girl = await findGirlById(parseInt(id));
+
+    if (!girl) return res.status(400).json({ message: "Não foi encontrada nenhuma garota." });
+
+    return res.status(201).json(girl);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};
+
+export const updateGirl: RequestHandler = async (req: ExtendFileRequest, res): Promise<any> => {
+  try {
+    //PEGA AS REQUISIÇÕES DO FORMULARIO
+    const EGirl = {
+      name_id: req.fields?.name_id?.[0].toLowerCase() as string,
+      name: req.fields?.name?.[0] as string,
+      description: true,
+      day: new Date(),
+      selected: true,
+      updatedAt: new Date(),
+      createdAt: new Date(),
+    };
+    //VERIFICA NO SCHEMA SE HÁ ALGUMA DIVERGÊNCIA
+    const safeData = girlSchema.safeParse(EGirl);
+    if (!safeData.success) {
+      return res.status(400).json({ error: safeData.error.flatten().fieldErrors });
+    }
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);

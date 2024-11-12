@@ -60,3 +60,21 @@ export const getGirls = async () => {
     }
   }
 };
+
+export const findGirlById = async (id: number) => {
+  try {
+    const girl = await prisma.girl.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!girl) return null;
+
+    return girl;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};
