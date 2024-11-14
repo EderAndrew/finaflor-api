@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import { RequestHandler } from "express";
 import { girlSchema } from "../schemas/girlSchema";
-import { findGirlById, findGirlByName, getGirls, newGirl } from "../services/girlService";
+import { editGirl, findGirlById, findGirlByName, getGirls, newGirl } from "../services/girlService";
 import { IGirl } from "../interfaces/girlinterface";
 import { ExtendFileRequest } from "../interfaces/extend-request";
 import formidable from "formidable";
@@ -16,7 +16,7 @@ export const createGirl: RequestHandler = async (req: ExtendFileRequest, res): P
     const EGirl = {
       name_id: req.fields?.name_id?.[0].toLowerCase() as string,
       name: req.fields?.name?.[0] as string,
-      description: true,
+      description: req.fields?.description?.[0] === "0" ? false : true,
       day: new Date(),
       selected: true,
       updatedAt: new Date(),
@@ -109,14 +109,14 @@ export const getOneGirl: RequestHandler = async (req, res): Promise<any> => {
 
 export const updateGirl: RequestHandler = async (req: ExtendFileRequest, res): Promise<any> => {
   try {
+    const { id } = req.params;
     //PEGA AS REQUISIÇÕES DO FORMULARIO
     const EGirl = {
       name_id: req.fields?.name_id?.[0].toLowerCase() as string,
       name: req.fields?.name?.[0] as string,
-      description: true,
-      day: new Date(),
+      description: (req.fields?.description?.[0] as string) === "0" ? false : true,
       selected: true,
-      updatedAt: new Date(),
+      updatedAt: req.fields?.updatedAt?.[0] as string,
       createdAt: new Date(),
     };
     //VERIFICA NO SCHEMA SE HÁ ALGUMA DIVERGÊNCIA
@@ -124,6 +124,55 @@ export const updateGirl: RequestHandler = async (req: ExtendFileRequest, res): P
     if (!safeData.success) {
       return res.status(400).json({ error: safeData.error.flatten().fieldErrors });
     }
+
+    //TRATA A IMAGEM
+    let files = req.files as { [fieldname: string]: formidable.File[] };
+    if (files.images === undefined) {
+      const data = {
+        name_id: safeData.data.name_id,
+        name: safeData.data.name,
+        description: safeData.data.description,
+        selected: safeData.data.selected,
+        pics: [],
+      };
+
+      const girl = await editGirl(parseInt(id), data as unknown as IGirl);
+
+      if (!girl) return res.status(400).json({ message: "Erro ao inserir garota." });
+
+      return res.status(201).json({ message: "Garota Atualizada com sucesso." });
+    }
+    let images: IPic[] = [];
+    for (let x = 0; x < files.images.length; x++) {
+      await sharp(files.images[x].filepath)
+        .toFormat("webp")
+        .toFile(`./public/media/${files.images[x].originalFilename?.split(".")[0]}.webp`);
+      images.push({
+        pic_name: req.fields?.name?.[0] as string,
+        pic_url:
+          process.env.NODE_ENV === "production"
+            ? `${process.env.URL_IMG_PROD}${files.images[x].originalFilename?.split(".")[0]}.webp`
+            : `${process.env.URL_IMG_DEV}/${files.images[x].originalFilename?.split(".")[0]}.webp`,
+        selected: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      await fs.unlink(files.images[x].filepath);
+    }
+
+    const data = {
+      name_id: safeData.data.name_id,
+      name: safeData.data.name,
+      description: safeData.data.description,
+      selected: safeData.data.selected,
+      pics: [...images],
+    };
+
+    const girl = await editGirl(parseInt(id), data as IGirl);
+
+    if (!girl) return res.status(400).json({ message: "Erro ao inserir garota." });
+
+    return res.status(201).json({ message: "Garota Atualizada com sucesso." });
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);

@@ -29,6 +29,23 @@ export const allSelectedPhotos = async () => {
       where: {
         selected: true,
       },
+      select: {
+        id: true,
+        pic_url: true,
+        pic_name: true,
+        selected: true,
+        createdAt: true,
+        updatedAt: true,
+        girl_id: true,
+        girls: {
+          select: {
+            description: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
     });
 
     if (!photo) return null;

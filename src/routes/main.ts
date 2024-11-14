@@ -16,7 +16,7 @@ mainRouter.post("/user", verifyJWT, userController.createUser);
 mainRouter.post("/girl", verifyJWT, formMiddleWare, girlController.createGirl);
 mainRouter.get("/girls", verifyJWT, girlController.getAllGirls);
 mainRouter.get("/girl/:id", verifyJWT, girlController.getOneGirl);
-mainRouter.put("/girl/:id", verifyJWT, girlController.updateGirl);
+mainRouter.put("/girl/:id", verifyJWT, formMiddleWare, girlController.updateGirl);
 
 mainRouter.put("/photo/:id", verifyJWT, photoController.updatePhotoStatus);
 mainRouter.get("/photos", verifyJWT, photoController.getAllSelectedPhotos);

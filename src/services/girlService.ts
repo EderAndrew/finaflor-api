@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { IGirl } from "../interfaces/girlinterface";
 import { prisma } from "../utils/prisma";
 
@@ -72,6 +73,51 @@ export const findGirlById = async (id: number) => {
     if (!girl) return null;
 
     return girl;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};
+
+export const editGirl = async (id: number, payload: IGirl) => {
+  try {
+    let includePics: boolean = false;
+    let girl: Prisma.GirlUpdateInput;
+
+    if (payload.pics.length > 0) {
+      includePics = true;
+    }
+    console.log(includePics);
+    if (includePics) {
+      girl = {
+        name_id: payload.name_id,
+        name: payload.name,
+        description: payload.description,
+        selected: payload.selected,
+        Pic: {
+          create: [...payload.pics],
+        },
+      };
+    } else {
+      girl = {
+        name_id: payload.name_id,
+        name: payload.name,
+        description: payload.description,
+        selected: payload.selected,
+      };
+    }
+
+    const updateGirl = await prisma.girl.update({
+      where: {
+        id,
+      },
+      data: girl,
+    });
+
+    if (!updateGirl) return null;
+
+    return updateGirl;
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
