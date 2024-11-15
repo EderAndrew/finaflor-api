@@ -68,6 +68,9 @@ export const findGirlById = async (id: number) => {
       where: {
         id,
       },
+      include: {
+        Pic: true,
+      },
     });
 
     if (!girl) return null;
