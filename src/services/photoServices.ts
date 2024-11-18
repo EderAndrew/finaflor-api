@@ -1,4 +1,3 @@
-import { IPic } from "../interfaces/picinterface";
 import { prisma } from "../utils/prisma";
 
 export const changeStatus = async (id: number, selected: boolean) => {
