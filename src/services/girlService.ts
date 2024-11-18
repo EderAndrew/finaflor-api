@@ -41,9 +41,12 @@ export const newGirl = async (payload: IGirl) => {
   }
 };
 
-export const getGirls = async () => {
+export const getGirls = async (skip: number) => {
   try {
     const girls = await prisma.girl.findMany({
+      where: {
+        selected: true,
+      },
       include: {
         Pic: true,
       },

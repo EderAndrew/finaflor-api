@@ -80,7 +80,8 @@ export const createGirl: RequestHandler = async (req: ExtendFileRequest, res): P
 
 export const getAllGirls: RequestHandler = async (req, res): Promise<any> => {
   try {
-    const girls = await getGirls();
+    const { skip } = req.params;
+    const girls = await getGirls(parseInt(skip));
     if (!girls) return res.status(400).json({ message: "Não tem nenhuma garota pra mostrar." });
 
     return res.status(200).json(girls);

@@ -44,7 +44,7 @@ export const allSelectedPhotos = async () => {
         },
       },
       orderBy: {
-        createdAt: "asc",
+        id: "asc",
       },
     });
 
