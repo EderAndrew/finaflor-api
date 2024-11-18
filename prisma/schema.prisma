@@ -73,3 +73,14 @@ model Promo {
 
   @@map("promos")
 }
+
+model Selected {
+  id          Int       @id @default(autoincrement())
+  name        String
+  url         String
+  description String
+  createdAt   DateTime?
+  updatedAt   DateTime  @default(now())
+
+  @@map("selecteds")
+}

@@ -1,7 +1,5 @@
 import { RequestHandler } from "express";
 import { allSelectedPhotos, changeStatus } from "../services/photoServices";
-import { photoSchema } from "../schemas/photoSchema";
-import { IPic } from "../interfaces/picinterface";
 
 export const updatePhotoStatus: RequestHandler = async (req, res): Promise<any> => {
   try {

@@ -43,7 +43,7 @@ export const allSelectedPhotos = async () => {
         },
       },
       orderBy: {
-        id: "asc",
+        pic_name: "asc",
       },
     });
 
