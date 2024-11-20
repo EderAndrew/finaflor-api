@@ -44,6 +44,7 @@ model Pic {
   pic_name  String
   pic_url   String
   selected  Boolean   @default(false)
+  position  Int       @default(0)
   createdAt DateTime?
   updatedAt DateTime  @default(now())
   girl_id   Int

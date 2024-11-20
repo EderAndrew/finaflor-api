@@ -1,13 +1,14 @@
 import { prisma } from "../utils/prisma";
 
-export const changeStatus = async (id: number, selected: boolean) => {
+export const changeStatus = async (id: number, selected: boolean, position: number) => {
   try {
     const photo = await prisma.pic.update({
       where: {
         id,
       },
       data: {
-        selected: selected,
+        selected,
+        position,
         updatedAt: new Date(),
       },
     });
@@ -22,6 +23,27 @@ export const changeStatus = async (id: number, selected: boolean) => {
   }
 };
 
+export const changePosition = async (id: number, position: number) => {
+  try {
+    const photo = await prisma.pic.update({
+      where: {
+        id,
+      },
+      data: {
+        position: position,
+        updatedAt: new Date(),
+      },
+    });
+
+    if (!photo) return null;
+
+    return photo;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};
 export const allSelectedPhotos = async () => {
   try {
     const photo = await prisma.pic.findMany({
@@ -33,6 +55,7 @@ export const allSelectedPhotos = async () => {
         pic_url: true,
         pic_name: true,
         selected: true,
+        position: true,
         createdAt: true,
         updatedAt: true,
         girl_id: true,
@@ -43,7 +66,7 @@ export const allSelectedPhotos = async () => {
         },
       },
       orderBy: {
-        pic_name: "asc",
+        position: "asc",
       },
     });
 

@@ -18,6 +18,11 @@ mainRouter.get("/girls/:skip", verifyJWT, girlController.getAllGirls);
 mainRouter.get("/girl/:id", verifyJWT, girlController.getOneGirl);
 mainRouter.put("/girl/:id", verifyJWT, formMiddleWare, girlController.updateGirl);
 
+//mainRouter.post("/banner", verifyJWT, formMiddleWare, bannerController.createEvent);
+//mainRouter.put("/banner/:id", verifyJWT, formMiddleWare, bannerController.updateEvent);
+//mainRouter.get("/banner/:id", verifyJWT, bannerController.getOneEvent);
+//mainRouter.get("/banners", verifyJWT, bannerController.getAllEvents);
+
 mainRouter.put("/photo/:id", verifyJWT, photoController.updatePhotoStatus);
 mainRouter.get("/photos", photoController.getAllSelectedPhotos);
 
