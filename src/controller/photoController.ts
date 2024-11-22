@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { allSelectedPhotos, changePosition, changeStatus } from "../services/photoServices";
+import { allSelectedPhotos, changePosition, changeStatus, cleanServiceAllPhotos } from "../services/photoServices";
 //import { createSelected } from "../services/selectedService";
 
 export const updatePhotoStatus: RequestHandler = async (req, res): Promise<any> => {
@@ -49,6 +49,20 @@ export const updatePhotoStatus: RequestHandler = async (req, res): Promise<any> 
 export const getAllSelectedPhotos: RequestHandler = async (req, res): Promise<any> => {
   try {
     const photos = await allSelectedPhotos();
+
+    if (!photos) return res.status(400).json({ message: "Nenhuma imagem selecionada." });
+
+    return res.status(200).json(photos);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};
+
+export const cleanAllSelectedPhotos: RequestHandler = async (req, res): Promise<any> => {
+  try {
+    const photos = await cleanServiceAllPhotos();
 
     if (!photos) return res.status(400).json({ message: "Nenhuma imagem selecionada." });
 

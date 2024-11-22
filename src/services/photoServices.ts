@@ -79,3 +79,25 @@ export const allSelectedPhotos = async () => {
     }
   }
 };
+
+export const cleanServiceAllPhotos = async () => {
+  try {
+    const photo = await prisma.pic.updateMany({
+      where: {
+        selected: true,
+      },
+      data: {
+        selected: false,
+        position: 0,
+      },
+    });
+
+    if (!photo) return null;
+
+    return photo;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};

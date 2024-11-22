@@ -24,6 +24,7 @@ mainRouter.put("/girl/:id", verifyJWT, formMiddleWare, girlController.updateGirl
 //mainRouter.get("/banners", verifyJWT, bannerController.getAllEvents);
 
 mainRouter.put("/photo/:id", verifyJWT, photoController.updatePhotoStatus);
+mainRouter.put("/photos_clean", verifyJWT, photoController.cleanAllSelectedPhotos);
 mainRouter.get("/photos", photoController.getAllSelectedPhotos);
 
 mainRouter.get("/ping", (req, res) => {
