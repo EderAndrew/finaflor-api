@@ -1,8 +1,8 @@
-import { RequestHandler } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { allSelectedPhotos, changePosition, changeStatus, cleanServiceAllPhotos } from "../services/photoServices";
 //import { createSelected } from "../services/selectedService";
 
-export const updatePhotoStatus: RequestHandler = async (req, res): Promise<any> => {
+export const updatePhotoStatus = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { selected, position } = req.body;

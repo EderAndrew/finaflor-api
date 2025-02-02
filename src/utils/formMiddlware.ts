@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import formidable from "formidable";
-import { ExtendFileRequest } from "../interfaces/extend-request";
+import { ExtendFileRequest } from "../types/extend-request";
 
 export const formMiddleWare = async (req: ExtendFileRequest, res: Response, next: NextFunction) => {
   try {

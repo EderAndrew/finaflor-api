@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { IGirl } from "../interfaces/girlinterface";
+import { Girl } from "../types/girl";
 import { prisma } from "../utils/prisma";
 
 export const findGirlByName = async (name: string) => {
@@ -14,7 +14,7 @@ export const findGirlByName = async (name: string) => {
   return girl;
 };
 
-export const newGirl = async (payload: IGirl) => {
+export const newGirl = async (payload: Girl) => {
   try {
     const girl = await prisma.girl.create({
       data: {
@@ -86,7 +86,7 @@ export const findGirlById = async (id: number) => {
   }
 };
 
-export const editGirl = async (id: number, payload: IGirl) => {
+export const editGirl = async (id: number, payload: Girl) => {
   try {
     let includePics: boolean = false;
     let girl: Prisma.GirlUpdateInput;

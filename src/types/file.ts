@@ -1,4 +1,4 @@
-export interface IFile {
+export type File = {
   id?: number;
   size: number;
   filepath: string;
@@ -8,6 +8,6 @@ export interface IFile {
   originalFilename: string;
 }
 
-export interface IFiles {
-  images: [IFile];
+export type Files = {
+  images: [File];
 }

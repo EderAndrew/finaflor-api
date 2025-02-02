@@ -1,4 +1,4 @@
-export interface IPic {
+export type Pic = {
   id?: number;
   pic_url: string;
   pic_name: string;

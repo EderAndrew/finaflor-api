@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { findUserById } from "../services/userService";
-import { ExtendedRequest } from "../interfaces/extend-request";
+import { ExtendedRequest } from "../types/extend-request";
 
 export const createJWT = (payload: object) => {
   return jwt.sign({ payload }, process.env.JWT_SECRET as string, {

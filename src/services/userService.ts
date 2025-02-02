@@ -1,4 +1,4 @@
-import { IUser } from "../interfaces/userinterface";
+import { User } from "../types/userinterface";
 import { prisma } from "../utils/prisma";
 
 export const findUser = async (name: string) => {
@@ -37,7 +37,7 @@ export const findUserById = async (id: number) => {
   }
 };
 
-export const postUser = async (info: IUser) => {
+export const postUser = async (info: User) => {
   try {
     const user = await prisma.user.create({
       data: {

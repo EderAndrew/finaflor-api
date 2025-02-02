@@ -1,6 +1,6 @@
-import { IPic } from "./picinterface";
+import { Pic } from "./pic";
 
-export interface IGirl {
+export type Girl = {
   id?: number;
   name_id: string;
   name: string;
@@ -9,5 +9,5 @@ export interface IGirl {
   selected: boolean;
   createdAt?: Date;
   updatedAt: Date;
-  pics: [IPic];
+  pics: [Pic];
 }
