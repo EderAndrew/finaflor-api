@@ -30,7 +30,7 @@ export const createGirl: RequestHandler = async (req: ExtendFileRequest, res): P
 
     //TRATA A IMAGEM
     let files = req.files as { [fieldname: string]: formidable.File[] };
-
+    console.log(files)
     let images: Pic[] = [];
     for (let x = 0; x < files.images.length; x++) {
       await sharp(files.images[x].filepath)

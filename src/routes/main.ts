@@ -9,9 +9,11 @@ import { verifyJWT } from "../utils/jwt";
 export const mainRouter = Router();
 
 mainRouter.post("/login", authController.login);
-mainRouter.post("/login_teste", authController.loginTeste);
+//mainRouter.post("/login_teste", authController.loginTeste);
 
 mainRouter.post("/user", verifyJWT, userController.createUser);
+mainRouter.get("/users", verifyJWT, userController.getAllUsers);
+mainRouter.get("/user/:id", verifyJWT, userController.getOneUser);
 
 mainRouter.post("/girl", verifyJWT, formMiddleWare, girlController.createGirl);
 mainRouter.get("/girls/:skip", verifyJWT, girlController.getAllGirls);

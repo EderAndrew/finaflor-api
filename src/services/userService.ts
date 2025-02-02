@@ -58,3 +58,17 @@ export const postUser = async (info: User) => {
     }
   }
 };
+
+export const allUsers = async () => {
+  try {
+    const users = await prisma.user.findMany({});
+
+    if (!users) return null;
+
+    return users;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+};
