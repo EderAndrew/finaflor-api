@@ -27,6 +27,7 @@ export const formMiddleWare = async (req: ExtendFileRequest, res: Response, next
         files.push({ name, file });
       })
       .on("end", () => {
+        console.log("Entrou aqui")
         console.log("-> upload done");
       });
 
@@ -37,7 +38,6 @@ export const formMiddleWare = async (req: ExtendFileRequest, res: Response, next
       }
       req.fields = fields;
       req.files = files;
-
       next();
     });
   } catch (error) {
